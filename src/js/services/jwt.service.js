@@ -7,7 +7,7 @@ export default class JWT {
   }
 
   save(token) {
-    this._$window.localStorage[this._AppConstants.jwtKey] = token;
+    return this._$window.localStorage[this._AppConstants.jwtKey] = token;
   }
 
   get() {
@@ -15,7 +15,6 @@ export default class JWT {
   }
 
   destroy() {
-    this._$window.localStorage.removeItem(this._AppConstants.jwtKey);
+    return this._$window.localStorage.removeItem(this._AppConstants.jwtKey);
   }
-
 }

@@ -12,7 +12,6 @@ export default class User {
 
   }
 
-
   attemptAuth(type, credentials) {
     let route = (type === 'login') ? '/login' : '';
     return this._$http({
@@ -31,19 +30,6 @@ export default class User {
     );
   }
 
-  update(fields) {
-    return this._$http({
-      url:  this._AppConstants.api + '/user',
-      method: 'PUT',
-      data: { user: fields }
-    }).then(
-      (res) => {
-        this.current = res.data.user;
-        return res.data.user;
-      }
-    )
-  }
-
   logout() {
     this.current = null;
     this._JWT.destroy();
@@ -53,53 +39,51 @@ export default class User {
   verifyAuth() {
     let deferred = this._$q.defer();
 
-    // check for JWT token
+    // check for JWT token first
     if (!this._JWT.get()) {
       deferred.resolve(false);
       return deferred.promise;
     }
 
+    // if there's a JWT & user is already set
     if (this.current) {
       deferred.resolve(true);
 
+    // if current user is set, get it from the server.
+    // if server doesn't 401, set current user & resolve promise.
     } else {
       this._$http({
         url: this._AppConstants.api + '/user',
-        method: 'GET',
-        headers: {
-          Authorization: 'Token ' + this._JWT.get()
-        }
+        method: 'GET'
       }).then(
         (res) => {
           this.current = res.data.user;
           deferred.resolve(true);
         },
-
         (err) => {
           this._JWT.destroy();
           deferred.resolve(false);
         }
-      )
+        // reject automatically handled by auth interceptor
+        // will boot them to homepage
+      );
     }
 
     return deferred.promise;
   }
-
 
   ensureAuthIs(bool) {
     let deferred = this._$q.defer();
 
     this.verifyAuth().then((authValid) => {
       if (authValid !== bool) {
-        this._$state.go('app.home')
+        this._$state.go('app.home');
         deferred.resolve(false);
       } else {
         deferred.resolve(true);
       }
-
     });
 
     return deferred.promise;
   }
-
 }

@@ -7,7 +7,7 @@ let servicesModule = angular.module('app.services', []);
 import UserService from './user.service';
 servicesModule.service('User', UserService);
 
-import JwtService from './jwt.service'
+import JwtService from './jwt.service.js';
 servicesModule.service('JWT', JwtService);
 
 import ProfileService from './profile.service';
@@ -21,6 +21,5 @@ servicesModule.service('Comments', CommentsService);
 
 import TagsService from './tags.service';
 servicesModule.service('Tags', TagsService);
-
 
 export default servicesModule;

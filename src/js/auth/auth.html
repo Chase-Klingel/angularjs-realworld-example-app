@@ -3,7 +3,7 @@
     <div class="row">
 
       <div class="col-md-6 offset-md-3 col-xs-12">
-        <h1 class="text-xs-center" ng-bind="::$ctrl.title"></h1>
+        <h1 class="text-xs-center">{{::$ctrl.title}}</h1>
         <p class="text-xs-center">
           <a ui-sref="app.login"
             ng-show="$ctrl.authType === 'register'">
@@ -42,14 +42,12 @@
             </fieldset>
 
             <button class="btn btn-lg btn-primary pull-xs-right"
-              type="submit"
-              ng-bind="::$ctrl.title">
+              type="submit">{{::$ctrl.title}}
             </button>
 
           </fieldset>
         </form>
       </div>
-
     </div>
   </div>
 </div>

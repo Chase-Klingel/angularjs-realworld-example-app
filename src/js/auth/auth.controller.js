@@ -4,10 +4,9 @@ class AuthCtrl {
 
     this._User = User;
     this._$state = $state;
-
+    // 'current' references second arg in .state() which is an object
     this.title = $state.current.title;
     this.authType = $state.current.name.replace('app.', '');
-
   }
 
   submitForm() {
